@@ -8,7 +8,7 @@ namespace OOTP_Lab3
 {
     partial class Train
     {
-
+        
         private static int instancesCount = 0;
 
         public static void WriteInfo()
@@ -16,7 +16,7 @@ namespace OOTP_Lab3
             Console.WriteLine($"Количество экземпляров класса Train: {Train.instancesCount}");
         }
 
-        private int id;
+        private readonly int id;
         private int number;
         private string destination;
         private int compartmentSeats;

@@ -8,7 +8,6 @@ namespace OOTP_Lab2
 {
     class Program
     {
-        
         public static void Task1a()
         {
             bool vbool = true;
@@ -153,7 +152,7 @@ namespace OOTP_Lab2
         public static void Task1f()
         {
             var b = "test";
-            b = 1.ToString();
+            //b = 1.T;
         }
 
         public static void Task2a()
@@ -397,10 +396,6 @@ namespace OOTP_Lab2
                         break;
                 }
             }
-
-
-
-
         }
     }
 }
