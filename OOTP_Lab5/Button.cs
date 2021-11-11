@@ -9,7 +9,7 @@ namespace OOTP_Lab5
     class Button : ControlElement
     {
         string Text { get; set; }
-        public Button(string text) : base(100, 10)
+        public Button(string text) : base(100, 20)
         {
             this.Text = text;
         }

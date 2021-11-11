@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OOTP_Lab5.Exceptions;
 
 namespace OOTP_Lab5
 {
-    class Rectangle : Shape
+    abstract class Rectangle : Shape
     {
         private double xSize;
         private double ySize;
@@ -20,6 +21,10 @@ namespace OOTP_Lab5
                     this.xSize = value;
                     this.RecalculateArea();
                 }
+                else if (value <= 0)
+                {
+                    throw new IncorrectSizeException(value);
+                }
             }
         }
         public double YSize
@@ -31,6 +36,10 @@ namespace OOTP_Lab5
                 {
                     this.ySize = value;
                     this.RecalculateArea();
+                }
+                else if (value <= 0)
+                {
+                    throw new IncorrectSizeException(value);
                 }
             }
         }
@@ -44,5 +53,6 @@ namespace OOTP_Lab5
             this.XSize = xSize;
             this.YSize = ySize;
         }
+        public abstract void SomeMethod();
     }
 }

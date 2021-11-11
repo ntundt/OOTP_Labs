@@ -8,11 +8,12 @@ namespace OOTP_Lab4
 {
     class Container<T>
     {
-        public T value;
+        public T value { get; set; }
         public Container<T> next { get; set; } = null;
         public Container<T> prev { get; set; } = null;
         public Container(T value) {
             this.value = value;
         }
+        public Container() {}
     }
 }

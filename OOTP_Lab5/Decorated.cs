@@ -13,5 +13,6 @@ namespace OOTP_Lab5
         Color BorderColor { get; set; }
         Color TextColor { get; set; }
         float TextSize { get; set; }
+        void SomeMethod();
     }
 }

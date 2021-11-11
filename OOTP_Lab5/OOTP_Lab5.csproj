@@ -72,6 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button.cs" />
+    <Compile Include="ColorConstruct.cs" />
+    <Compile Include="EColor.cs" />
+    <Compile Include="Exceptions\IncorrectSizeException.cs" />
+    <Compile Include="Exceptions\NoFileOpenedException.cs" />
+    <Compile Include="Log\ConsoleLogger.cs" />
+    <Compile Include="Log\FileLogger.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="SoftwareTool.cs" />
+    <Compile Include="SoftwareToolController.cs" />
+    <Compile Include="WindowState.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ControlElement.cs" />
     <Compile Include="Decorated.cs" />

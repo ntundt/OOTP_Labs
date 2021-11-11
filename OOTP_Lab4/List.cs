@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.IO;
 
 namespace OOTP_Lab4
 {
-    class List<T>
+    class List<T> : ICollection<T>// where T : struct
     {
-        public Container<T> FirstElement = null;
-        public Container<T> LastElement = null;
+        public Container<T> FirstElement { get; set; } = null;
+        public Container<T> LastElement { get; set; } = null;
 
         private bool Initialized
         {
@@ -49,12 +52,24 @@ namespace OOTP_Lab4
                 ptr = ptr.next;
             }
         }
+        public List(T[] source)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                this.InsertHead(source[i]);
+            }
+        }
 
         public List()
         {
             this.owner = new Owner(0, "Mikita Tsikhanovich", "BSTU");
             DateTime now = DateTime.Now;
             this.creationDate = new List<T>.Date(now.Hour, now.Minute);
+        }
+
+        public List(string filename)
+        {
+            this.ReadFromFile(filename);
         }
 
         public void InsertHead(T element)
@@ -87,8 +102,39 @@ namespace OOTP_Lab4
             }
         }
 
+        public void Insert(T element)
+        {
+            this.InsertTail(element);
+        }
+
+        public void Delete(T element)
+        {
+            Container<T> ptr = this.FirstElement;
+            while (ptr != null)
+            {
+                if (ptr.value.Equals(element))
+                {
+                    try
+                    {
+                        ptr.prev.next = ptr.next;
+                    } 
+                    catch { }
+                    try
+                    {
+                        ptr.next.prev = ptr.prev;
+                    }
+                    catch { }
+                }
+                ptr = ptr.next;
+            }
+        }
+
         public T RemoveLastElement()
         {
+            if (!this.Initialized)
+            {
+                throw new NotInitializedException();
+            }
             if (this.LastElement.prev != null)
             {
                 this.LastElement.prev.next = null;
@@ -104,6 +150,10 @@ namespace OOTP_Lab4
 
         public T RemoveFirstElement()
         {
+            if (!this.Initialized)
+            {
+                throw new NotInitializedException();
+            }
             if (this.FirstElement.next != null)
             {
                 this.FirstElement.next.prev = null;
@@ -117,6 +167,18 @@ namespace OOTP_Lab4
             }
         }
 
+        public void Find(Predicate<T> predicate, Action<T> action)
+        {
+            Container<T> ptr = this.FirstElement;
+            while (ptr != null)
+            {
+                if (predicate(ptr.value))
+                {
+                    action(ptr.value);
+                }
+                ptr = ptr.next;
+            }
+        }
         public override string ToString()
         {
             StringBuilder result = new StringBuilder("");
@@ -197,6 +259,32 @@ namespace OOTP_Lab4
             }
 
             return true;
+        }
+
+        public void SaveToFile(string filename)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            StreamWriter writer = new StreamWriter(filename);
+            string json = JsonSerializer.Serialize(this, options);
+            writer.Write(json);
+            writer.Close();
+        }
+
+        public void ReadFromFile(string filename)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            StreamReader reader = new StreamReader(filename);
+            List<T> list = JsonSerializer.Deserialize<List<T>>(reader.ReadToEnd(), options);
+            this.FirstElement = list.FirstElement;
+            this.LastElement = list.LastElement;
         }
 
         public static bool operator false(List<T> list)

@@ -12,12 +12,14 @@ namespace OOTP_Lab5
         protected Button maximize;
         protected Button close;
         protected Menu contents;
+        protected WindowState state;
         public Window(Button minimize, Button maximize, Button close, Menu contents) : base(100, 110)
         {
             this.minimize = minimize;
             this.maximize = maximize;
             this.close = close;
             this.contents = contents;
+            this.state = WindowState.Maximized;
         }
         public Window() : base(100, 110)
         {
@@ -28,6 +30,7 @@ namespace OOTP_Lab5
             this.contents = new Menu(menuContents);
             this.BackgroundColor = new Color(255, 255, 255);
             this.TextSize = 12;
+            this.state = WindowState.Maximized;
         }
         public override string ToString()
         {

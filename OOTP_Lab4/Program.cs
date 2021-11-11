@@ -4,33 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace OOTP_Lab4
 {
     class Program
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int>();
-            list += 2;
-            list.InsertTail(3);
-            list.InsertHead(1);
+            List<int> list = new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+            list.Insert(11);
+            list.Insert(12);
+            list.Find(x => x % 2 == 0, Console.WriteLine);
 
-            Console.WriteLine($"{list}");
+            List<int> list1 = new List<int>("Test.txt");
+            list1.Find(x => true, Console.WriteLine);
 
-            Console.WriteLine($"Сумма элментов: {list.Sum()}");
-            Console.WriteLine($"Разность между максимальным и минимальным: {list.MinMaxDiff()}");
-            Console.WriteLine($"Количество элементов: {list.ElementCount()}");
-            string not = list ? "" : "не ";
-            Console.WriteLine($"Список {not}упорядочен");
+            List<Color> list2 = new List<Color>(new Color[] { new Color(0, 0, 0), new Color(255, 255, 255) });
+            list2.Find(x => true, Console.WriteLine);
+            list2.SaveToFile("Colors.txt");
 
-            List<string> list1 = new List<string>();
-            list1 += "word1";
-            list1 += null;
-            list1 += "";
-            list1 += "word1 word2 word3";
-            Console.WriteLine($"Список строк: {list1}");
-            Console.WriteLine($"Количество слов: {list1.WordCount()}");
-            Console.WriteLine($"Есть ли нулевые элементы: {list1.HasNullElements()}");
+            List<int> list3 = new List<int>(new int[] { });
+            try
+            {
+                list3.RemoveLastElement();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                list3 = null;
+            }
         }
     }
 }
